@@ -1,0 +1,9 @@
+<!-- <form (submit)="onSubmit()" class="w-full  flex  flex-col gap-2 sm:w-[70%]  md:w-[30%] bg-gray-100 p-4 rounded-lg space-y-4 ">
+  <h1 class="text-center capitalize text-2xl font-bold">{{for}}</h1>
+    <ng-content></ng-content>
+  </form>
+   -->
+   <form #f="ngForm" (ngSubmit)="onSubmit()" class="w-full flex flex-col gap-2 sm:w-[70%] md:w-[30%] bg-gray-100 p-4 rounded-lg space-y-4">
+    <h1 class="text-center capitalize text-2xl font-bold">{{ for }}</h1>
+    <ng-content></ng-content>
+  </form>
