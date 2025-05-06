@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { PostComponent } from './components/post/post.component';
 
 const routes: Routes = [
-  {path:"",component:HomeComponent},
+  {path:"",component:HomeComponent,},
   {path:"login",component:LoginFormComponent},
   {path:"signup",component:SignupFormComponent},
   {path:"post/:id",component:PostComponent},

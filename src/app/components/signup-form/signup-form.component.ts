@@ -1,12 +1,8 @@
-import { signupResponse } from '../../interfaces/auth-response';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { validateForm } from '../../utils/validation';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -15,35 +11,24 @@ import { Router } from '@angular/router';
 })
 export class SignupFormComponent implements OnInit {
   isLoading:boolean=false
-  constructor(private toast: ToastrService, private http: HttpClient,private router:Router) {}
-
-  handleRegister(data: NgForm): void {
-    console.log(data.value);
-
-    const result: boolean = validateForm(data.value, 'signup', this.toast);
-    if (!result) return;
-this.isLoading=true
-    this.http
-      .post<signupResponse>(
-        'https://angular-auth-server.onrender.com/api/auth/signup',
-        data.value
-      )
-      .pipe(
-        catchError((err) => {
-          this.isLoading=false
-          this.toast.error(err.error?.message || 'Signup failed', 'Error');
-          return of(null);
-        })
-      )
-      .subscribe((res: any) => {
-        this.isLoading=false
-        if (res) {
-          this.toast.success('Signup successful!', 'Success');
-          data.reset();
-          this.router.navigate(['/login'])
-        }
-      });
+  constructor( private http: HttpClient,private router:Router,private authService:AuthServiceService) {
+    this.authService.isLoadingObservable.subscribe((loading)=>{
+      this.isLoading=loading
+    })
   }
 
-  ngOnInit(): void {}
+  handleRegister(data: NgForm): void {
+
+    this.authService.signup(data)
+
+
+  }
+
+  ngOnInit(): void {
+    this.authService.isLoginStatusObservable.subscribe((status)=>{
+      if(status){
+        this.router.navigate([''])
+      }
+    })
+  }
 }

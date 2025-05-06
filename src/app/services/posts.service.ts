@@ -1,12 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
+
+  isLoadingSubject = new BehaviorSubject<boolean>(false);
+  isLoadingObservable = this.isLoadingSubject.asObservable();
+
   private postSubject = new BehaviorSubject<any[]>([]);
   postObservable = this.postSubject.asObservable();
+
+    constructor(
+      private http: HttpClient,
+      private route: Router
+    ) {}
 
   updatePost(posts: any[]) {
     const oldPosts = this.postSubject.getValue();
@@ -18,5 +30,23 @@ export class PostsService {
     return this.postSubject.getValue();
   }
 
-  constructor() { }
+ 
+
+    fetchPost(): void {
+this.isLoadingSubject.next(true)
+      this.http.get<any>('https://dummyjson.com/posts')
+        .pipe(
+          catchError((err) => {
+            this.isLoadingSubject.next(false)
+            console.error('Error fetching posts:', err);
+            return of(null);
+          })
+        )
+        .subscribe((res: any) => {
+          this.isLoadingSubject.next(false)
+          if (res && res.posts) {
+            this.updatePost(res.posts);
+          }
+        });
+    }
 }

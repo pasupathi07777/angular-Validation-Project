@@ -10,7 +10,7 @@ import { ButtonComponent } from './shared/button/button.component';
 import { InputComponent } from './shared/input/input.component';
 import { AppLoderComponent } from './components/app-loder/app-loder.component';
 import { FormComponent } from './components/form/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,7 +38,7 @@ import { PostComponent } from './components/post/post.component';
     CommonModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
