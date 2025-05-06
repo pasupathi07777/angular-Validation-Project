@@ -25,8 +25,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
 
     const token:string | null  = this.authService.getTokenInLocalStorage();
+    console.log(token);
     
     if (token) {
+      console.log(token);
+      
       this.authService.verifyToken(token)
     } else {
       this.router.navigate(['/login']);

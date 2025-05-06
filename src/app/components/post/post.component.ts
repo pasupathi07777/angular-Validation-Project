@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { catchError } from 'rxjs/operators'; 
 import { of } from 'rxjs'; 
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-post',
@@ -29,7 +30,7 @@ export class PostComponent implements OnInit {
 
   fetchData(id: number): void {
     this.isLoading=true
-    this.http.get<any>(`https://dummyjson.com/posts/${id}`)
+    this.http.get<any>(`${environment.dummyApi}posts/${id}`)
       .pipe(
         catchError((err: any) => { 
           this.isLoading=false

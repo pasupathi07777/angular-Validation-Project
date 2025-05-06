@@ -10,6 +10,7 @@ import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { validateForm } from '../utils/validation';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -55,6 +56,7 @@ export class AuthServiceService {
 
   logIn(form: NgForm) {
     this.isLoadingSubject.next(true);
+    
     if (form.invalid) {
       this.toast.error('Please fill all required fields correctly');
       return;
@@ -63,7 +65,7 @@ export class AuthServiceService {
     if (!validateForm(form.value, 'login', this.toast)) return;
     this.http
       .post<LoginResponse>(
-        'https://angular-auth-server.onrender.com/api/auth/login',
+        `${environment.baseUrl}api/auth/login`,
         form.value
       )
       .subscribe({
@@ -92,7 +94,7 @@ export class AuthServiceService {
 
     this.http
       .post<signupResponse>(
-        'https://angular-auth-server.onrender.com/api/auth/signup',
+        `${environment.baseUrl}api/auth/signup`,
         data.value
       )
       .pipe(
@@ -114,7 +116,7 @@ export class AuthServiceService {
 
   verifyToken(token: string): void {
 this.isLoadingSubject.next(true)
-    this.http.get<LoginResponse>(`https://angular-auth-server.onrender.com/api/auth/verify-token?token=${token}`)
+    this.http.get<LoginResponse>(`${environment.baseUrl}api/auth/verify-token?token=${token}`)
       .subscribe({
         next: (res: any) => {
           this.isLoadingSubject.next(false)

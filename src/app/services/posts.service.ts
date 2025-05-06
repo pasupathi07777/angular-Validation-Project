@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, catchError, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class PostsService {
 
     fetchPost(): void {
 this.isLoadingSubject.next(true)
-      this.http.get<any>('https://dummyjson.com/posts')
+      this.http.get<any>(`${environment.dummyApi}posts`)
         .pipe(
           catchError((err) => {
             this.isLoadingSubject.next(false)
