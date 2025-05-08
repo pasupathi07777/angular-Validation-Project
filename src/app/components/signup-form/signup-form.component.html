@@ -1,5 +1,7 @@
 <div class="w-screen h-screen flex justify-center items-center">
-  <form #form="ngForm" (ngSubmit)="handleRegister(form)" class="w-full flex flex-col gap-2 sm:w-[70%] md:w-[30%] bg-gray-100 p-4 rounded-lg space-y-4">
+
+  <form [formGroup]="signupForm" (ngSubmit)="handleRegister()" class="w-full flex flex-col gap-2 sm:w-[70%] md:w-[30%] bg-gray-100 p-4 rounded-lg space-y-4">
+
     <h1 class="text-center capitalize text-2xl font-bold">Register</h1>
 
     <!-- Username -->
@@ -9,11 +11,15 @@
         type="text"
         id="userName"
         name="userName"
-        required
-       ngModel
+        formControlName="userName"
         placeholder="Enter username"
         class="px-3 py-2 border rounded"
       />
+      <p  Class="error" *ngIf="!userName?.valid && userName?.dirty">
+        <span *ngIf="userName?.errors?.['required']">Required</span>
+        <span *ngIf="userName?.errors?.['minlength']">Minimum 6 characters required</span>
+        <span *ngIf="userName?.errors?.['maxlength']">Maximum 12 characters allowed</span>
+      </p>
     </div>
 
     <!-- Email -->
@@ -23,11 +29,14 @@
         type="email"
         id="email"
         name="email"
-        required
-        ngModel
+        formControlName="email"
         placeholder="Enter email"
         class="px-3 py-2 border rounded"
       />
+      <p Class="error" *ngIf="!email?.valid && email?.dirty">
+        <span *ngIf="email?.errors?.['required']">Required</span>
+        <span *ngIf="email?.errors?.['email']">Enter a valid email</span>
+      </p>
     </div>
 
     <!-- Password -->
@@ -37,16 +46,18 @@
         type="password"
         id="password"
         name="password"
-        required
-        ngModel
+        formControlName="password"
         placeholder="Enter password"
         class="px-3 py-2 border rounded"
       />
+      <p Class="error" *ngIf="!password?.valid && password?.dirty">
+        <span *ngIf="password?.errors?.['required']">Required</span>
+        <span *ngIf="password?.errors?.['minlength']">Minimum 6 characters required</span>
+        <span *ngIf="password?.errors?.['maxlength']">Maximum 16 characters allowed</span>
+      </p>
     </div>
 
-  
-
-    <app-button type="submit" [isLoading]='isLoading' label="Register" ></app-button>
+    <app-button type="submit" [isLoading]='isLoading' [disabled]="!signupForm.valid" label="Register"></app-button>
 
     <!-- Login Link -->
     <a routerLink="/login" class="text-blue-600 hover:text-blue-800 font-medium text-center underline underline-offset-2">

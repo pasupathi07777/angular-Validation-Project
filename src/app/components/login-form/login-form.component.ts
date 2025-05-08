@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
-
+import { LoginService } from 'src/app/services/auth/login.service';
+import { UserService } from 'src/app/services/auth/user.service';
 
 @Component({
   selector: 'app-login-form',
@@ -12,23 +12,38 @@ import { AuthServiceService } from 'src/app/services/auth-service.service';
 export class LoginFormComponent implements OnInit {
   isLoading: boolean = false;
   constructor(
-    private authServices: AuthServiceService,
-    private route:Router
+    private loginService: LoginService,
+    private route: Router,
+    private userService: UserService
   ) {
-   this.authServices.isLoadingObservable.subscribe((current:boolean)=>{
-    this.isLoading= current
-    })
+    this.loginService.isLoadingObservable.subscribe((current: boolean) => {
+      this.isLoading = current;
+    });
   }
 
-  handleLogin(form: NgForm): void {
-    this.authServices.logIn(form)
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required
+    ]),
+  });
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  handleLogin(): void {
+    this.loginService.logIn(this.loginForm.value);
   }
 
   ngOnInit(): void {
-    this.authServices.isLoginStatusObservable.subscribe((status)=>{
-      if(status){
-        this.route.navigate([''])
+    this.userService.isLoginStatusObservable.subscribe((status) => {
+      if (status) {
+        this.route.navigate(['']);
       }
-    })
+    });
   }
 }

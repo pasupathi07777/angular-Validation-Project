@@ -1,0 +1,40 @@
+<div class="w-full h-full flex justify-center items-center">
+  <form
+    [formGroup]="dataForm"
+    (ngSubmit)="onSubmit()"
+    class="w-full max-w-sm mx-auto bg-white p-6 rounded-lg shadow-md space-y-4 flex flex-col"
+  >
+    <h2 class="text-xl font-semibold text-gray-800 text-center">
+      Select Data You Want
+    </h2>
+
+    <div class="flex flex-col gap-2">
+      <label for="dataName" class="text-sm text-gray-700 font-medium"
+        >Choose Data</label
+      >
+      <select
+        id="dataName"
+        formControlName="dataName"
+        class="border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        <option value="">Select</option>
+        <option value="posts">Posts</option>
+        <option value="users">Users</option>
+        <option value="products">Products</option>
+        <option value="todos">Todos</option>
+      </select>
+      <p *ngIf="!dataName?.valid && dataName?.dirty">
+        <span class="error" *ngIf="dataName?.errors?.['required']"
+          >Required</span
+        >
+      </p>
+    </div>
+
+    <app-button
+      [disabled]="!dataForm.valid"
+      label="Fetch"
+      type="submit"
+      [isLoading]="isLoading"
+    ></app-button>
+  </form>
+<!-- </div> -->

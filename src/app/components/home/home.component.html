@@ -1,23 +1,8 @@
+<header class="flex justify-between fixed w-full top-0 z-50 bg-white p-4 shadow-md ">
+  <!-- <app-button (clickButtom)="fetchData()" label="Fetch Data"></app-button> -->
+  <h1 class="text-3xl font-bold ">Pro</h1>
+  <app-button (clickButtom)="logOut()" label="Logout" bgColor="red"></app-button>
+</header>
 
 
-
-<div class="flex justify-between">
-  <app-button (clickButtom)="fetchData()" label="Fetch Data"></app-button>
-<app-button (clickButtom)="logOut()" label="logout" bgColor="red"></app-button>
-</div>
-
-<ul *ngIf="posts.length > 0; else alter" class="mt-6 space-y-2">
-  <li
-    *ngFor="let data of posts; let i = index"
-    (click)="navigateEachPost(data.id)"
-    class="cursor-pointer flex items-start gap-4 p-4 bg-white shadow-md rounded-lg border hover:bg-blue-50 transition duration-200"
-  >
-    <span class="text-sm font-semibold text-blue-600">{{ i + 1 }}.</span>
-    <span class="text-gray-800 font-medium">{{ data?.title }}</span>
-  </li>
-</ul>
-
-<ng-template #alter>
-  <p *ngIf="isLoading" class="mt-4 text-gray-500 text-center">loading...</p>
-  <p *ngIf="!isLoading" class="mt-4 text-gray-500 text-center">No data available.</p>
-</ng-template>
+<app-fetch-data-form></app-fetch-data-form>

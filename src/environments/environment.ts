@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl:"https://angular-auth-server.onrender.com/",
+  baseUrl:"https://angular-auth-server.onrender.com/api/",
   dummyApi:"https://dummyjson.com/"
   
 };

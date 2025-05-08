@@ -16,20 +16,24 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { PostComponent } from './components/post/post.component';
+import { FetchDataFormComponent } from './components/fetch-data-form/fetch-data-form.component';
+import { DataShowComponent } from './components/data-show/data-show.component';
+import { EachDataComponent } from './components/each-data/each-data.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginFormComponent,
     SignupFormComponent,
-    HomeComponent,
+    HomeComponent ,
     ButtonComponent,
     InputComponent,
     AppLoderComponent,
     FormComponent,
     PageNotFoundComponent,
-    PostComponent,
+    LoginFormComponent,
+    FetchDataFormComponent,
+    DataShowComponent,
+    EachDataComponent
   ],
   imports: [
     BrowserModule,

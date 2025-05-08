@@ -1,5 +1,9 @@
 <div class="w-screen h-screen flex justify-center items-center">
-  <form #form="ngForm" (ngSubmit)="handleLogin(form)" class="w-full flex flex-col gap-2 sm:w-[70%] md:w-[30%] bg-gray-100 p-4 rounded-lg space-y-4">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="handleLogin()"
+    class="w-full flex flex-col gap-2 sm:w-[70%] md:w-[30%] bg-gray-100 p-4 rounded-lg space-y-4"
+  >
     <h1 class="text-center capitalize text-2xl font-bold">Login</h1>
 
     <!-- Email -->
@@ -9,11 +13,14 @@
         type="email"
         id="email"
         name="email"
-        required
-        ngModel
+        formControlName="email"
         placeholder="Enter email"
         class="px-3 py-2 border rounded"
       />
+      <p Class="error" *ngIf="!email?.valid && email?.dirty">
+        <span *ngIf="email?.errors?.['required']">Required</span>
+        <span *ngIf="email?.errors?.['email']">Enter a valid email</span>
+      </p>
     </div>
 
     <!-- Password -->
@@ -23,17 +30,26 @@
         type="password"
         id="password"
         name="password"
-        required
-        ngModel
+        formControlName="password"
         placeholder="Enter password"
         class="px-3 py-2 border rounded"
       />
+      <p Class="error" *ngIf="!password?.valid && password?.dirty">
+        <span *ngIf="password?.errors?.['required']">Required</span>
+      </p>
     </div>
 
     <!-- Submit -->
-    <app-button type="submit" [isLoading]='isLoading' label="Login" ></app-button>
+    <app-button
+      type="submit"
+      [isLoading]="isLoading"
+      [disabled]="!loginForm.valid"
+      label="Login"
+    ></app-button>
 
     <!-- Link -->
-    <a routerLink="/signup" class="text-center text-blue-600 underline mt-2">Don't have an account? Sign up</a>
+    <a routerLink="/signup" class="text-center text-blue-600 underline mt-2"
+      >Don't have an account? Sign up</a
+    >
   </form>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/auth/user.service';
 
 @Component({
   selector: 'app-app-loder',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppLoderComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private userService:UserService,
+    private route:Router
+  ) { }
 
   ngOnInit(): void {
+this.userService.isLoginStatusObservable.subscribe((status)=>{
+  console.log(status);
+  
+  if(status){
+    console.log(status);
+    this.route.navigate([''])
+  }else{
+    this.route.navigate(['/login'])
+  }
+})
   }
 
 }
